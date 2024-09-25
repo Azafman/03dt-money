@@ -1,0 +1,2 @@
+1° anotação: Contexto: criar a tabela para listagem de transações. 
+--- Diego considerou criar um componente para para a tabela no caso de: ou uma listagem de transações ser necessária em outra parte do sistema (por exemplo: somente transações acima de determinado valor) ou existir muita lógica envolvida na tabela.
