@@ -1,6 +1,7 @@
 import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles'
 import logoImg from '../../assets/logo.svg'
 import * as Dialog from '@radix-ui/react-dialog'
+import { NewTransactionModal } from '../NewTransactionModal'
 
 export const Header = () => {
   return (
@@ -24,18 +25,8 @@ export const Header = () => {
                 */}
             <NewTransactionButton>Nova Transação</NewTransactionButton>
           </Dialog.Trigger>
-          <Dialog.Portal>
-            {/* permite que você renderize elemeto children em uma parte diferente do DOM. Neste caso, fora inclusive do div root, criada pelo react.*/}
-            <Dialog.Overlay />{/* Deixa o fundo com opacidade menor. */}
-            <Dialog.Content>
-              <Dialog.Title>Nova transação</Dialog.Title>
-              {/* ajuda na acessibilidade. O leitor de tela, quando a caixa dialog for aberta, irá ler para o usuário final
-                  que um modal foi aberto e este model é de "Nova transação"  */}
-              <Dialog.Close />
-
-            </Dialog.Content>
-
-          </Dialog.Portal>
+          
+          <NewTransactionModal />
         </Dialog.Root>
 
       </HeaderContent>
