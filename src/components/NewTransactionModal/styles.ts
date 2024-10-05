@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as Dialog from "@radix-ui/react-dialog"
+import * as RadioGroup from "@radix-ui/react-radio-group"
 /* Salvo os casos onde precisamos, estilizar os componentes, como nesse - sobre misturar styled-components com outras bibliotecas.  */
 
 export const Overlay = styled(Dialog.Overlay)`
@@ -70,7 +71,9 @@ export const Close = styled(Dialog.Close)`
     border: 0;
 `
 
-export const TransactionType = styled.div`
+/* Veja:  https://www.radix-ui.com/primitives/docs/components/radio-group, mesma coisa do exemplo do link, porém
+de uma maneira diferente. */
+export const TransactionType = styled(RadioGroup.Root)`/* Contains all the parts of a radio group.*/
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -79,7 +82,7 @@ export const TransactionType = styled.div`
 interface TransactionTypeButtonProps {
     variant: 'income' | 'outcome';
 }
-export const TransactionTypeButton = styled.button<TransactionTypeButtonProps>`
+export const TransactionTypeButton = styled(RadioGroup.Item)<TransactionTypeButtonProps>`
     background: ${props => props.theme["gray-700"]};
     padding: 1rem;
     display: flex;
@@ -90,8 +93,23 @@ export const TransactionTypeButton = styled.button<TransactionTypeButtonProps>`
     cursor: pointer;
     border: 0;
     color: ${props => props.theme["gray-300"]};
-    
+
     svg {
       color: ${props => props.variant === 'income' ? props.theme["green-300"] : props.theme["red-300"]};
+    }
+
+    &[data-state="checked"] {/* quando o item estiver checked */
+        color: ${props => props.theme.white};
+        background: ${props => props.variant === 'income' ? props.theme['green-500'] : props.theme['red-500']};
+
+        svg {
+            color: ${props => props.theme.white};
+            border-color: transparent !important;
+        }
+    }
+
+    &[data-state="unchecked"]:hover {/* quando o item não estiver checked */
+        background-color: ${props => props.theme['gray-600']};
+        transition: background-color .2s;
     }
   `;
