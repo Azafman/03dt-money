@@ -15,6 +15,13 @@
         "category": "Alimentação",
         "price": 50,
         "createdAt": "2022-07-29T19:30:44.505Z"
+      }, {
+        "id": 3,
+        "description": "Faculdade EAD - Uniube",
+        "type": "outcome",
+        "category": "Educação",
+        "price": 250,
+        "createdAt": "2022-11-29T19:30:44.505Z"
       }
     ]
   }
