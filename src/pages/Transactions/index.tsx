@@ -1,29 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext } from "react"
 import { Header } from "../../components/Header"
 import { Summary } from "../../components/Summary"
 import { SearchForm } from "./components/SearchForm"
 import { PriceHighlight, TransactionContainer, TransactionsTable } from "./styles"
+import { TransactionsContext } from "../../contexts/TransactionsContext"
 
-interface TransactionType {
-  id: string;
-  description: string;
-  type: 'income' | 'outcome';
-  price: number;
-  category: string;
-  createdAt: string;
-}
 export const Transactions = () => {
-  const [transactions, setTransactions] = useState<TransactionType[]>([]);
-  //quando criamos states, sempre é importate tipar o mesmo, principalmente quando se trata de objeto ou array.
-  async function loadTransactions() {
-    const response = await fetch('http://localhost:3333/transactions');
-    const data = await response.json();
-    
-    setTransactions(data);
-  }
-  useEffect(() => {
-    loadTransactions();
-  }, [])
+  const {transactions} = useContext(TransactionsContext);
 
   console.log(transactions);
   
