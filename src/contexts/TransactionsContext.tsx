@@ -12,15 +12,23 @@ interface TransactionType {
 
 interface TransactionsContextType {
     transactions: TransactionType[];
+    loadTransactions: (query?: string) => Promise<void>
 }
 export const TransactionsContext = createContext({} as TransactionsContextType);
 
 export const TrasanctionContextProvider = ({ children }: { children: ReactNode }) => {
     const [transactions, setTransactions] = useState<TransactionType[]>([]);
     //quando criamos states, sempre é importate tipar o mesmo, principalmente quando se trata de objeto ou array.
-    async function loadTransactions() {
-        const response = await fetch('http://localhost:3333/transactions');
-        const data = await response.json();
+    async function loadTransactions(query?: string) {
+        const url = new URL('http://localhost:3333/transactions');
+
+        if (query) {
+            url.searchParams.append('q', query);
+            //http://localhost:3333/transactions?q={query}
+        }
+        console.log(url)
+
+        const data = await fetch(url).then(response => response.json());
         
         setTransactions(data);
     }
@@ -28,7 +36,10 @@ export const TrasanctionContextProvider = ({ children }: { children: ReactNode }
         loadTransactions();
     }, []);
     
-    return <TransactionsContext.Provider value={{ transactions }}>
+    return <TransactionsContext.Provider value={{ 
+        transactions,
+        loadTransactions 
+    }}>
         {children}
     </TransactionsContext.Provider>
 }
