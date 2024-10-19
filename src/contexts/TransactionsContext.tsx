@@ -40,6 +40,8 @@ export const TrasanctionContextProvider = ({ children }: { children: ReactNode }
         //"/transactions" ou "transactions" é a mesma coisa
         const response = await api.get('/transactions', {
             params: {
+                _order: 'desc',
+                _sort: 'createdAt',
                 description: query
             }
         })//não preciso converter o json para js, a própria lib faz isso para mim
