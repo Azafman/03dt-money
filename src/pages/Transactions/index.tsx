@@ -9,7 +9,6 @@ import { dateFormatter, priceFormatter } from "../../utils/formatter"
 export const Transactions = () => {
   const {transactions} = useContext(TransactionsContext);
 
-  console.log(transactions);
   
   return (
     <div>
