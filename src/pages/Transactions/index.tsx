@@ -1,15 +1,18 @@
-import { useContext } from "react"
-import { Header } from "../../components/Header"
-import { Summary } from "../../components/Summary"
-import { SearchForm } from "./components/SearchForm"
-import { PriceHighlight, TransactionContainer, TransactionsTable } from "./styles"
-import { TransactionsContext } from "../../contexts/TransactionsContext"
-import { dateFormatter, priceFormatter } from "../../utils/formatter"
+import { useContext } from 'react'
+import { Header } from '../../components/Header'
+import { Summary } from '../../components/Summary'
+import { SearchForm } from './components/SearchForm'
+import {
+  PriceHighlight,
+  TransactionContainer,
+  TransactionsTable,
+} from './styles'
+import { TransactionsContext } from '../../contexts/TransactionsContext'
+import { dateFormatter, priceFormatter } from '../../utils/formatter'
 
 export const Transactions = () => {
-  const {transactions} = useContext(TransactionsContext);
+  const { transactions } = useContext(TransactionsContext)
 
-  
   return (
     <div>
       <Header />
@@ -29,7 +32,9 @@ export const Transactions = () => {
                     </PriceHighlight>
                   </td>
                   <td>{transaction.category}</td>
-                  <td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+                  <td>
+                    {dateFormatter.format(new Date(transaction.createdAt))}
+                  </td>
                 </tr>
               )
             })}

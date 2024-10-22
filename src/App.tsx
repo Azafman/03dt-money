@@ -1,11 +1,10 @@
-import { TrasanctionContextProvider } from "./contexts/TransactionsContext"
-import { Transactions } from "./pages/Transactions"
+import { TrasanctionContextProvider } from './contexts/TransactionsContext'
+import { Transactions } from './pages/Transactions'
 
-export const  App = () => {
+export const App = () => {
   return (
     <TrasanctionContextProvider>
       <Transactions />
     </TrasanctionContextProvider>
   )
 }
-

@@ -25,10 +25,9 @@ export const Header = () => {
                 */}
             <NewTransactionButton>Nova Transação</NewTransactionButton>
           </Dialog.Trigger>
-          
+
           <NewTransactionModal />
         </Dialog.Root>
-
       </HeaderContent>
     </HeaderContainer>
   )
