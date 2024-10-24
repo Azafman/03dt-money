@@ -12,6 +12,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TransactionsContext } from '../../contexts/TransactionsContext'
 import { useContextSelector } from 'use-context-selector'
+import { memo } from 'react'
 
 const transactionFormSchema = z.object({
   description: z.string(),
@@ -20,7 +21,7 @@ const transactionFormSchema = z.object({
   type: z.enum(['outcome', 'income']),
 })
 type transactionFormInputs = z.infer<typeof transactionFormSchema>
-export const NewTransactionModal = () => {
+const NewTransactionModalComponent = () => {
   const createTransaction = useContextSelector(
     TransactionsContext,
     (context) => {
@@ -130,3 +131,24 @@ export const NewTransactionModal = () => {
     </Dialog.Portal>
   )
 }
+export const NewTransactionModal = memo(NewTransactionModalComponent)
+/* 
+Quando componentes são renderizados:
+- Hooks changed (estado, contexto, reducer muda)
+- Props changed (mudou propriedas)
+- Parent Rerendered (componente pai rednerizou)
+
+Fluxo normal de renderização
+* 1. O react recria o HTML da interface daquele componente
+* 2. Compara a versão do HTML recriado com a versão anterior do componente em questão
+* 3. SE mudou alguma coisa, o react reescreve o HTML na tela
+
+Memo:
+* 0.1 Hooks changed, Props changed (deep comparison)
+* 0.1 Comparar com a versão anterior dos hooks e Props
+* 0.2 SE algo mudou, o react permite a renderização (segue para o fluxo normal de renderização)
+Quando se usa memo, os as 3 instruções acima são seguidas.
+
+
+Porém muita das vezes fazer deep comparison de um componte é muito mais custoso para o react, do que simplesmente comparar com a versão HTML anterior do componente. Principalmente quando se tem estruturas de dados complexas como arrays e objetos nos rooks e/ou props. Sem contar que a deep comparison é feita nos componentes filhos também.
+*/
