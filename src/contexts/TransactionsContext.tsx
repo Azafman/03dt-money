@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { TransactionType } from '../components/NewTransactionModal/styles'
 import { api } from '../libs/axios'
 import { createContext } from 'use-context-selector'
@@ -41,7 +41,7 @@ export const TrasanctionContextProvider = ({
 }) => {
   const [transactions, setTransactions] = useState<TransactionType[]>([])
   // quando criamos states, sempre é importate tipar o mesmo, principalmente quando se trata de objeto ou array.
-  async function loadTransactions(query?: string) {
+  const loadTransactions = useCallback(async (query?: string) => {
     // "/transactions" ou "transactions" é a mesma coisa
     const response = await api.get('/transactions', {
       params: {
@@ -53,8 +53,8 @@ export const TrasanctionContextProvider = ({
     // console.log(response); esse objecto é semelhate a quando usamos fetch e then sem antes de dar um .json
 
     setTransactions(response.data)
-  }
-  async function createTransaction(data: NewTransactionType) {
+  }, []) // semelhante ao useEffect. Com array vazio,  nunca será recriado, obs: não usa estado ou variável exterior à função
+  const createTransaction = useCallback(async (data: NewTransactionType) => {
     const { description, type, category, price, createdAt } = data
     const response = await api.post('/transactions', {
       description,
@@ -69,7 +69,11 @@ export const TrasanctionContextProvider = ({
     ])
     // para não ter que consultar api outra vez já atualizamos o estado que contém as transações.
     // tendo em vista que para criar uma transação é feita uma requisição à API.
-  }
+  }, []) // isso juntamente com o useContextSelector impede que a função seja reescrita quando houver mudança no contexto (comportamento padrão do react)
+  // o useContextSelector faz com que o react observe somente a função e não todo o contexto
+  // já o useCallback impede que a função seja recriada.
+  // quando a função é recriada, os componentese que a utilizam, são renderizados novamente. O useCallback alinhado com o useSelectorContext impede que o componente (que está usando a função) seja renderizado outra vez por haver mudança nos estados ligados à essas funções.
+
   /* 
     Observações aula: poderíamos ter uma função somente que atualiza o estado de transações. Porém isso deixaria em muito em aberto. Por exemplo poderíamos com essa função remover de qualquer componente dentro do contexto, alguma transação.
     
