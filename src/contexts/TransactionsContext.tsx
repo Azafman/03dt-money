@@ -1,6 +1,7 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { TransactionType } from '../components/NewTransactionModal/styles'
 import { api } from '../libs/axios'
+import { createContext } from 'use-context-selector'
 
 interface TransactionType {
   id: string
@@ -31,7 +32,7 @@ interface TransactionsContextType {
         - Expõem de forma "perigoso" o estado.
     */
 }
-export const TransactionsContext = createContext({} as TransactionsContextType)
+export const TransactionsContext = createContext({} as TransactionsContextType) // A API É A MESMA, NÃO É PRECISO ALTERAR ALGO NA LÓGICA DO CONTEXT
 
 export const TrasanctionContextProvider = ({
   children,
