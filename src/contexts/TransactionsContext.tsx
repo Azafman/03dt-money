@@ -82,7 +82,7 @@ export const TrasanctionContextProvider = ({
 
   useEffect(() => {
     loadTransactions()
-  }, [])
+  }, [loadTransactions])
 
   return (
     <TransactionsContext.Provider
